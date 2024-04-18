@@ -11,69 +11,84 @@ You'll analyze sales data to gain insights into which cities in the U.S. have so
    - [x] Inside your local Git repository, add the starter files from your file downloads
    - [x] Push these changes to GitHub or GitLab.
 
+## Files
+Download the following files to help you get started:
+
 ## Instructions
 The starter code provided includes all the steps necessary to complete this challenge.
-## Part 1: Explore the Data
-In this part, you will import the data and use Pandas to learn more about the dataset.
+## Combine and Clean the Data
+1.  Import the two CSV files, athletic_sales_2020.csv and athletic_sales_2021.csv, and read them into DataFrames.
 
--   Import the data from the CSV file.
+2.  Check that the columns in the two DataFrames have similar names and data types.
 
--   View the column names.
-
--   Use the describe function to gather some basic statistics.
-
--   Use the provided space to explore and make yourself familiar with the data. Feel free to create more cells as needed.
-
-- Answer the following questions using Pandas:
-
-    - What three item categories had the most entries?
-
-    - For the category with the most entries, which subcategory had the most entries?
-
-    - Which five clients had the most entries in the data?
-
-        - Store the client ids of those top 5 clients in a list.
-    - How many total units (the qty column) did the client with the most entries order?
-
-## Part 2: Transform the Data
-Now that you have a better understanding of the data you will be asked to transform the data for better and easier analysis.
-
--   Create a column that calculates the subtotal for each line using the unit_price and the qty.
-
--   Create a column for shipping price. Assume a shipping price of $7 per pound for orders over 50 pounds and $10 per pound for items 50 pounds or under.
-
--   Create a column for the total price using the subtotal and the shipping price along with a sales tax of 9.25%.
-
--   Create a column for the cost of each line using unit cost, qty, and shipping price (assume the shipping cost is exactly what is charged to the client).
-
--   Create a column for the profit of each line using line cost and line price.
-
-## Part 3: Confirm Your Work
-After transforming data, it's always a good idea to verify the results. You have email receipts showing the total prices for 3 orders.
-
-Order ID 2742071 had a total price of $152,811.89 Order ID 2173913 had a total price of $162,388.71 Order ID 6128929 had a total price of $923,441.25
-
-- Confirm that your calculations match the receipts. Remember, each order has multiple lines.
-
-## Part 4: Summarize and Analyze
-Use the new columns with confirmed values to find the following information.
-
--   How much did each of the top 5 clients by quantity spend? Use your work from Part 1 for client ids?
-
--   Create a summary DataFrame showing the totals for the top 5 clients with the following information: total units purchased, total shipping price, total revenue, and total profit. Sort by total profit.
-
-- Format the data and rename the columns to names suitable for presentation. Currency should be in millions of dollars.
-
--   Write a brief 2-3 sentence summary of your findings.
-
-
+3. Combine the two DataFrames by the rows using an inner join, and reset the index.
 
 > [!TIP]
-> **Use the Pandas DataFrame documentationLinks to an external site. to find helpful functions. Feel free to use functions that you didn’t learn in class if you find they make the work easier!**
+> **Read over the instructions to determine if you should use concat, join, or merge.**
 
->**Remember to make functions whenever appropriate and name them well. Functions are helpful both for performing operations and for making code more readable.**
+4. After combining the DataFrames, do the following:
 
->**Don’t forget to use all the steps in the analytical process! It can be especially hard to remember the steps that come before the coding starts. Define the question before you begin, and make sure to read to the end of the instructions first. If there are steps that don’t make sense yet, use the space reserved for data exploration to try and understand it.**
+    - Check if there are any null values.
+
+    - Check each column’s data type.
+
+    - Convert the "invoice_date" column to a datetime data type.
+
+
+## Determine which Region Sold the Most Products
+1. Use either the groupby or pivot_table function to create a multi-index DataFrame with the "region", "state", and "city" columns.
+
+2. Rename the aggregated column to reflect the aggregation of the data in the column.
+
+3. Sort the results in descending order to show the top five regions, including the state and city that have the greatest number of products sold. Your final table should look like the following image:
+
+
+## Determine which Region had the Most Sales
+1. Use either the groupby or pivot_table function to create a multi-index DataFrame with the "region", "state", and "city" columns.
+
+2. Rename the aggregated column to reflect the aggregation of the data in the column.
+
+3. Sort the results in descending order to show the top five regions, including the state and city that generated the most sales. Your final table should look like the following image:
+
+## Determine which Retailer had the Most Sales
+1. Use either the groupby or pivot_table function to create a multi-index DataFrame with the "retailer", "region", "state", and "city" columns.
+
+2. Rename the aggregated column to reflect the aggregation of the data in the column.
+
+3. Sort the results in descending order to show the top five retailers along with their region, state, and city that generated the most sales. Your final table should look like the following image:
+
+## Determine which Retailer Sold the Most Women's Athletic Footwear
+1. Filter the combined DataFrame to create a DataFrame with only women's athletic footwear sales data.
+
+> [!TIP]
+> **Use df[df["column_name"].str.contains("<value>")] or df.loc[(df["column_name"] =="<value>")].**
+
+2. Use either the groupby or pivot_table function to create a multi-index DataFrame with the "retailer", "region", "state", and "city" columns.
+
+3. Rename the aggregated column to reflect the aggregation of the data in the column.
+
+4. Sort the results in descending order to show the top five retailers along with their region, state, and city that sold the most women's athletic footwear. Your final table should look like the following image:
+
+## Determine the Day with the Most Women's Athletic Footwear Sales
+1. Create a pivot table with the "invoice_date" column as the index and the "total_sales" column as the values parameter.
+
+2. Rename the aggregated column to reflect the aggregation of the data in the column.
+
+3. Apply the resample function to the pivot table, place the data into daily bins, and get the total sales for each day.
+
+4. Sort the resampled DataFrame in descending order to show the top 10 days that generated the most women's athletic footwear sales. Your final table should look like the following image:
+
+## Determine the Week with the Most Women's Athletic Footwear Sales
+1. Apply resample to the pivot table above, place the data into weekly bins, and get the total sales for each week.
+
+2. Sort the resampled DataFrame in descending order to show the top 10 weeks that generated the most women's athletic footwear sales. Your final table should look like the following image:
+
+## Hints and Considerations
+- Consider what you've learned so far. You’ve learned how to combine data using concatenation, joins, and merging, and how to reshape data using groupby, pivot, pivot_table, resample, and melt functions.
+
+- If you're struggling with how to start, look back on some of the activities you did in class.
+
+- Always commit your work and back it up with pushes to GitHub or GitLab. You don't want to lose hours of your hard work! Also make sure that your repo has a detailed README.md file.
 
 ## Badges
 
@@ -82,7 +97,7 @@ Use the new columns with confirmed values to find the following information.
 ## Installation
 
 ## Usage
-This assigment highlights the usage of Pandas, lambda, groupby, and apply functions for analyzing sales information for an e-commerce company.
+This assigment highlights the usage of groupby and pivot table functions for analyzing sales information for athletic apparel sales in the United States.
 
 ## Support
 Some of the code on this assigment was done with the help of a bootcamp tutor.
@@ -92,8 +107,7 @@ Some of the code on this assigment was done with the help of a bootcamp tutor.
 ## Contributing
 
 ## Authors and acknowledgment
-1. Code generated with the assistance of Lebuso Philly
- (@Bootcamp Tutor)
+1. Code generated with the assistance of Vijaya (@Bootcamp Tutor)
 2. Reference material - [PEP 8 – Style Guide for Python Code](https://peps.python.org/pep-0008/)
 3. Python HOWTOs - [https://docs.python.org/3/howto](https://docs.python.org/3/howto/index.html)
 4. This site was built using [GitHub Pages](https://pages.github.com/).
@@ -102,7 +116,7 @@ Some of the code on this assigment was done with the help of a bootcamp tutor.
 
 
 ## Project status
-- Submitted for grading (04.11.2024)
+- Submitted for grading (04.18.2024)
 
 ## Footnotes
 Sales Product Data. Available: (https://www.kaggle.com/datasets/knightbearr/sales-product-dataLinks) to an external site.
